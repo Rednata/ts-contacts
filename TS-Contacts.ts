@@ -32,7 +32,7 @@ const persons: User[] = [
 }
 ];
 
-const logPerson = (user: {name: string, age: number}) => {
+const logPerson = (user: User) => {
   console.log(`${user.name}, ${user.age}`);
 }
 
