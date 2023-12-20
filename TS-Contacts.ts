@@ -1,62 +1,74 @@
 interface User {
+  type: 'user';
   name: string;
   age: number;
   group: string;
 };
 
 interface Admin {
+  type: 'admin';
   name: string;
   age: number;
-  role: 'admin';
+  role: string;
 }
 
 type Person = User | Admin;
 
 const persons: Person[] = [
   {
-    name: 'Петя Главный',
-    age: 28,
-    role: 'admin',
-  },
-  {
+    type: 'admin',
     name: 'Иван Петров',
     age: 27,
-    group: 'SEO-специалист',
+    role: 'Administrator',
   },
   {
+    type: 'user',
     name: 'Марат Aляуддинов',
     age: 20,
     group: 'Музыкант',
   },
   {
+    type: 'user',
     name: 'Коля Васильев',
     age: 30,
     group: 'Семья',
 },
-{
+  {
+    type: 'user',
     name: 'Миша Печенькин',
     age: 18,
     group: 'Друзья',
-},
-{
+  },
+  {
+    type: 'user',
     name: 'Оля Борисова',
     age: 25,
     group: 'Друзья',
-}
+  }
 ];
 
-const isRole = (user: Person): user is Admin => {
-  return 'role' in user;
+const isAdmin = (user: Person): user is Admin => {
+  return user.type === 'admin'
+}
+
+const isUser = (user: Person): user is User => {
+  return user.type === 'user'
 }
 
 const logPerson = (person: Person): void => {
   let information: string;
-  if (isRole(person)) {
+  if (isAdmin(person)) {
     information = person.role;
   } else {
     information = person.group;
   }
-  console.log(`${person.name}, ${person.age}, ${information}`);
+  console.log(` - ${person.name}, ${person.age}, ${information}`);
 }
 
-persons.forEach(logPerson);
+console.log('Admins:');
+persons.filter(isAdmin).forEach(logPerson);
+
+console.log();
+
+console.log('Users:');
+persons.filter(isUser).forEach(logPerson);
