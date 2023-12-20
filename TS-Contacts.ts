@@ -1,10 +1,10 @@
-type User = {
+interface User {
   name: string;
   age: number;
   group: string;
 };
 
-type Admin = {
+interface Admin {
   name: string;
   age: number;
   role: 'admin';
@@ -45,9 +45,18 @@ const persons: Person[] = [
 }
 ];
 
-const logPerson = (user: Person): void => {
-  console.log(`${user.name}, ${user.age}`);
+const isRole = (user: Person): user is Admin => {
+  return 'role' in user;
 }
 
-console.log('Users:', persons);
+const logPerson = (person: Person): void => {
+  let information: string;
+  if (isRole(person)) {
+    information = person.role;
+  } else {
+    information = person.group;
+  }
+  console.log(`${person.name}, ${person.age}, ${information}`);
+}
+
 persons.forEach(logPerson);
